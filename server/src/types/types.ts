@@ -5,7 +5,7 @@ export interface Message {
   user?: User;
 }
 
-interface User {
+export interface User {
   name: string;
   room: string;
   id?: string;

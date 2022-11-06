@@ -1,3 +1,4 @@
+import { join } from "path";
 import io, { Socket } from "socket.io-client";
 import { MessageHandler } from "./MessageHandler";
 
@@ -23,10 +24,16 @@ export class Chat {
   onConnect(): () => void {
     return () => {
       this.user.id = this.socket.id;
+      this.joinRoom();
+    };
+  }
+
+  joinRoom() {
+    this.socket.emit("join-room", this.user, () => {
       this.handler.append(
         this.handler.getInfoMessage(`You are connected to ${this.user.room}`)
       );
-    };
+    });
   }
   onReceive(): (message: Message) => void {
     return (message) => {
