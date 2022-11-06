@@ -8,7 +8,8 @@ export class Chat {
 
   constructor(user: User, handler: MessageHandler) {
     this.user = user;
-    this.socket = io("http://localhost:5000");
+    // this.socket = io("http://localhost:5000");
+    this.socket = io("https://simple-chat-web-backend.vercel.app");
     this.handler = handler;
 
     this.initializeEvents();
