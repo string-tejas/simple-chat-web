@@ -1,4 +1,3 @@
-import { join } from "path";
 import io, { Socket } from "socket.io-client";
 import { MessageHandler } from "./MessageHandler";
 

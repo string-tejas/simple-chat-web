@@ -47,7 +47,7 @@ function App() {
 
   useEffect(() => {
     if (user) chat?.updateUser(user);
-  }, [user]);
+  }, [user, chat]);
 
   return (
     <Scaffold>

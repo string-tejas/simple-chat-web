@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import colors from "./color";
 import sendSvg from "./send.svg";
@@ -28,7 +28,7 @@ const TextInput: React.FC<{
         placeholder="Send a message..."
       />
       <Button type="submit">
-        <img src={sendSvg} />
+        <img src={sendSvg} alt="send icon" />
       </Button>
     </Container>
   );
