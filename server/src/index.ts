@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { ChatHandler } from "./handlers/ChatHandler";
+import cors from "cors";
 require("dotenv").config();
 
 const app = express();
@@ -12,6 +13,12 @@ const io = new Server(httpServer, {
     origin: ["http://localhost:3000", "https://simple-chat-web.vercel.app"],
   },
 });
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://simple-chat-web.vercel.app"],
+  })
+);
 
 io.on("connection", (socket) => {
   const chat = new ChatHandler(socket);
