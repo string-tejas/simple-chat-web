@@ -7,42 +7,26 @@ import {
 import TextInput from "./components/TextInput";
 import chatSvg from "./chat.svg";
 import ChatCloud from "./components/ChatCloud";
-import { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+import { Socket } from "socket.io-client/build/esm/socket";
+import OverlayUserForm from "./components/OverlayUserForm";
 
 interface Message {
   text: string;
   direction: "sent" | "received" | "info";
 }
 
-const testmessages: Message[] = [
-  {
-    text: "Hello",
-    direction: "received",
-  },
-  {
-    text: "How are You ??",
-    direction: "received",
-  },
-  {
-    text: "This is bob",
-    direction: "received",
-  },
-  {
-    text: "Hi bob ",
-    direction: "sent",
-  },
-  {
-    text: "John here",
-    direction: "sent",
-  },
-  {
-    text: "Hi John ! how you've been are you good ? Everything going alright",
-    direction: "received",
-  },
-];
+interface User {
+  name: string;
+  room: string;
+  id?: string;
+}
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>(testmessages);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const handleSendMessageClick = async (message: string) => {
     if (message.trim() === "") return;
@@ -68,6 +52,28 @@ function App() {
     if (messages[index + 1].direction !== currentMessage.direction) return true;
 
     return false;
+  };
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:5000");
+    console.log(newSocket);
+    newSocket.on("connect", () => {
+      if (newSocket.connected) {
+        setSocket(newSocket);
+      } else {
+        setSocket(null);
+      }
+    });
+  }, []);
+
+  const saveUser = (name: string, room: string) => {
+    const newUser: User = {
+      name,
+      room,
+    };
+    console.log(newUser);
+
+    setUser(newUser);
   };
 
   return (
@@ -97,6 +103,7 @@ function App() {
       <BottomBar>
         <TextInput onSendMessageClick={handleSendMessageClick} />
       </BottomBar>
+      {!user && <OverlayUserForm onSubmit={saveUser} />}
     </Scaffold>
   );
 }

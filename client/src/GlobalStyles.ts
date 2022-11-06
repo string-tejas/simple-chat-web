@@ -7,6 +7,15 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     font-family: Outfit;
 }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
 `;
 
 export default GlobalStyles;
