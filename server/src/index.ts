@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { ChatHandler } from "./handlers/ChatHandler";
 require("dotenv").config();
 
 const app = express();
@@ -14,6 +15,8 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log(socket.id);
+  const chat = new ChatHandler(socket);
+  chat.initializeEvents();
 });
 
 httpServer.listen(port, () => {

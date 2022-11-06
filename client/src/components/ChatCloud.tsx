@@ -7,6 +7,10 @@ const ChatCloud: React.FC<{
   showTail?: boolean;
   children: React.ReactNode;
 }> = ({ children, direction, showTail }) => {
+  if (direction === "info") {
+    return <InfoBubble>{children}</InfoBubble>;
+  }
+
   const isSent = direction === "sent";
 
   return (
@@ -57,11 +61,11 @@ const SentBubble = styled(BaseBubble)`
     position: absolute;
     display: ${(props) => (props.showTail ? "block" : "none")};
     z-index: 0;
-    height: 9px;
-    width: 14px;
+    height: 8px;
+    width: 18px;
     background-color: ${colors.greenTealDark};
     right: 0px;
-    bottom: -5px;
+    bottom: -3px;
     transform: skew(20deg) rotate(20deg);
   }
 `;
@@ -74,12 +78,21 @@ const ReceivedBubble = styled(BaseBubble)`
     display: ${(props) => (props.showTail ? "block" : "none")};
     position: absolute;
     z-index: 0;
-    height: 9px;
-    width: 14px;
+    height: 8px;
+    width: 18px;
     background-color: ${colors.gray};
     /* background-color: red; */
-    left: -2px;
-    bottom: -5px;
+    left: -1px;
+    bottom: -3px;
     transform: skew(-20deg) rotate(-20deg);
   }
+`;
+
+const InfoBubble = styled(BaseBubble)`
+  align-self: center;
+  background-color: ${colors.gray};
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  margin-top: 1rem;
 `;

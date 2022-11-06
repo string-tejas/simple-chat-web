@@ -55,7 +55,7 @@ const Label = styled.span<{ float: boolean; children: string }>`
   pointer-events: none;
 
   font-size: ${(props) => (props.float ? "0.8rem" : "1rem")};
-  top: ${(props) => (props.float ? "0px" : "14px")};
+  top: ${(props) => (props.float ? "-2px" : "14px")};
   left: ${(props) => (props.float ? "-1px" : "0px")};
   color: ${(props) => (props.float ? colors.greenTeal : "gray")};
 `;
@@ -65,6 +65,7 @@ const Input = styled.input<{ focused: boolean; hastext: boolean }>`
   outline: none;
   border: none;
   width: 100%;
+  padding-bottom: 3px;
 
   transition: 250ms;
 

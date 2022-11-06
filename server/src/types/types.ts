@@ -1,6 +1,4 @@
-/// <reference types="react-scripts" />
-
-interface Message {
+export interface Message {
   text: string;
   direction: "sent" | "received" | "info";
   user?: User;
