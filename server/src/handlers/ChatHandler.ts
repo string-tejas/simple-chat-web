@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import { Message } from "../types/types";
+import { v4 as uuid } from "uuid";
 
 export class ChatHandler {
   socket: Socket;
@@ -13,7 +14,7 @@ export class ChatHandler {
   sendMessage() {
     return (message: Message) => {
       message.direction = "received";
-      console.log(message?.user?.name, "sent", message.text);
+      message.id = uuid();
       this.socket.broadcast.emit("receive-message", message);
     };
   }

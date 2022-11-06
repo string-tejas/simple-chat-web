@@ -5,23 +5,31 @@ import colors from "./color";
 const ChatCloud: React.FC<{
   direction: "sent" | "received" | "info";
   showTail?: boolean;
+  showName?: boolean;
+  name?: string | null;
   children: React.ReactNode;
-}> = ({ children, direction, showTail }) => {
+}> = ({ children, direction, showTail, showName, name }) => {
   if (direction === "info") {
     return <InfoBubble>{children}</InfoBubble>;
   }
 
   const isSent = direction === "sent";
 
-  return (
-    <CloudWrapper sent={isSent}>
-      {isSent ? (
-        <SentBubble showTail={showTail}>{children}</SentBubble>
-      ) : (
-        <ReceivedBubble showTail={showTail}>{children}</ReceivedBubble>
-      )}
-    </CloudWrapper>
-  );
+  const determineBubble = () => {
+    if (isSent) return <SentBubble showTail={showTail}>{children}</SentBubble>;
+
+    if (showName)
+      return (
+        <NamedWrapper>
+          <Name>{name || "A user"}</Name>
+          <ReceivedBubble showTail={showTail}>{children}</ReceivedBubble>
+        </NamedWrapper>
+      );
+
+    return <ReceivedBubble showTail={showTail}>{children}</ReceivedBubble>;
+  };
+
+  return <CloudWrapper sent={isSent}>{determineBubble()}</CloudWrapper>;
 };
 
 export default ChatCloud;
@@ -95,4 +103,18 @@ const InfoBubble = styled(BaseBubble)`
   border-radius: 999px;
   font-size: 0.9rem;
   margin-top: 1rem;
+`;
+
+const NamedWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1rem;
+`;
+
+const Name = styled.span`
+  color: gray;
+  font-size: 13px;
+  margin-bottom: 4px;
 `;

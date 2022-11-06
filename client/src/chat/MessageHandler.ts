@@ -16,6 +16,7 @@ export class MessageHandler {
     return {
       direction: "info",
       text,
+      id: Date.now().toString(),
     } as Message;
   }
   prepareSendMessage(text: string): Message {

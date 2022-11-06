@@ -37,6 +37,7 @@ export class Chat {
   sendMessage(text: string) {
     const message = this.handler.prepareSendMessage(text);
     message.user = this.user;
+    message.id = this.user.id + ":" + Date.now();
     this.socket.emit("send-message", message);
     this.handler.append(message);
   }
