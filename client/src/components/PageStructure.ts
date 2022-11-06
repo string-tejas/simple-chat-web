@@ -19,6 +19,10 @@ export const TopBar = styled.nav`
   display: flex;
   align-items: center;
   gap: 12px;
+
+  @media (max-width: 400px) {
+    font-size: 1rem;
+  }
 `;
 
 export const MessagesArea = styled.section`
@@ -32,4 +36,31 @@ export const MessagesArea = styled.section`
 
 export const BottomBar = styled.div`
   background-color: ${colors.grayGreen};
+`;
+
+export const UserChip = styled.button`
+  background-color: ${colors.greenTeal};
+  padding: 0.2rem 0.8rem;
+  border-radius: 99px;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: auto;
+  cursor: pointer;
+  transition: 250ms;
+
+  &:hover {
+    background-color: ${colors.greenTealDark};
+    color: #bbb;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  @media (max-width: 800px) {
+    font-size: 0.9rem;
+  }
 `;

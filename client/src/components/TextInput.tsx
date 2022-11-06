@@ -53,6 +53,7 @@ const TextField = styled.input`
   font-size: 1.1rem;
   flex-grow: 1;
   color: #eaeaea;
+  min-width: 0px;
 `;
 const Button = styled.button`
   background-color: ${colors.greenTeal};
@@ -72,5 +73,8 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${colors.greenTealDark};
+  }
+  &:active {
+    transform: scale(0.9);
   }
 `;

@@ -5,9 +5,10 @@ import { useState } from "react";
 
 const OverlayUserForm: React.FC<{
   onSubmit?: (name: string, room: string) => void;
-}> = ({ onSubmit }) => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+  user?: User | null;
+}> = ({ onSubmit, user }) => {
+  const [name, setName] = useState(user?.name || "");
+  const [room, setRoom] = useState(user?.room || "");
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();

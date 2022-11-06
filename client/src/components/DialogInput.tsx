@@ -4,13 +4,13 @@ import colors from "./color";
 
 interface propTypes {
   label: string;
-  value: string;
+  value?: string;
   onChange?: (value: string) => void;
 }
 
-const DialogInput: React.FC<propTypes> = ({ label, onChange }) => {
+const DialogInput: React.FC<propTypes> = ({ label, onChange, value }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>(value || "");
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const input = event.target.value;
@@ -34,6 +34,7 @@ const DialogInput: React.FC<propTypes> = ({ label, onChange }) => {
         hastext={text !== ""}
         onChange={handleTextChange}
         onFocus={handleFocus}
+        value={text}
         onBlur={handleBlur}
         type="text"
       />

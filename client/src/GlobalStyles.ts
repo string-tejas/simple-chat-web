@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: Outfit;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 }
 body {
   -webkit-font-smoothing: antialiased;

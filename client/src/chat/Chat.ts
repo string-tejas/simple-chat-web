@@ -48,4 +48,10 @@ export class Chat {
     this.socket.emit("send-message", message);
     this.handler.append(message);
   }
+
+  updateUser(updatedUser: User) {
+    const id = this.user.id;
+    this.user = updatedUser;
+    this.user.id = id;
+  }
 }

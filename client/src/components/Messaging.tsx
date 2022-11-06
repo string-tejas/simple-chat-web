@@ -24,8 +24,25 @@ const Messaging: React.FC<{ messages: Message[] }> = ({ messages }) => {
     if (messages[index - 1].direction === "sent") return true;
     if (messages[index - 1].direction === "info") return true;
     if (messages[index - 1].user?.id !== messages[index].user?.id) return true;
+    if (messages[index - 1].user?.name !== messages[index].user?.name)
+      return true;
 
     return false;
+  };
+
+  const getName = (index: number) => {
+    const name = messages[index].user?.name;
+
+    if (index === 0) return name;
+    if (index - 1 < 0) return name;
+
+    // name change
+    const previous = messages[index - 1].user;
+    const current = messages[index].user;
+    if (previous?.id === current?.id && previous?.name !== current?.name)
+      return previous?.name + " → " + current?.name;
+
+    return name;
   };
 
   return (
@@ -35,12 +52,13 @@ const Messaging: React.FC<{ messages: Message[] }> = ({ messages }) => {
         .map((message, index) => {
           const showTail = tailLogic(index);
           const showName = nameLogic(index, message.direction);
+          const name = getName(index);
           return (
             <ChatCloud
               showTail={showTail}
               direction={message.direction}
               key={message.id}
-              name={message.user?.name || null}
+              name={name || null}
               showName={showName}
             >
               {message.text}

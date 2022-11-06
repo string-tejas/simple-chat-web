@@ -1,7 +1,12 @@
-import { BottomBar, Scaffold, TopBar } from "./components/PageStructure";
+import {
+  BottomBar,
+  Scaffold,
+  TopBar,
+  UserChip,
+} from "./components/PageStructure";
 import TextInput from "./components/TextInput";
 import chatSvg from "./chat.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OverlayUserForm from "./components/OverlayUserForm";
 import { Chat } from "./chat/Chat";
 import { MessageHandler } from "./chat/MessageHandler";
@@ -11,6 +16,7 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [chat, setChat] = useState<Chat | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [showDialog, setShowDialog] = useState(true);
 
   const handleSendMessageClick = async (message: string) => {
     if (message.trim() === "") return;
@@ -22,6 +28,13 @@ function App() {
       name,
       room,
     };
+
+    if (user?.room === newUser.room) {
+      setUser({ ...user, name: newUser.name });
+      setShowDialog(false);
+      return;
+    }
+
     const updateMessages = (messages: Message[]) => setMessages(messages);
     const newChat = new Chat(
       newUser,
@@ -29,18 +42,26 @@ function App() {
     );
     setUser(newUser);
     setChat(newChat);
+    setShowDialog(false);
   };
+
+  useEffect(() => {
+    if (user) chat?.updateUser(user);
+  }, [user]);
 
   return (
     <Scaffold>
       <TopBar>
         <img src={chatSvg} alt="logo" /> Chat with socket.io
+        {user && (
+          <UserChip onClick={() => setShowDialog(true)}>{user.name}</UserChip>
+        )}
       </TopBar>
       <Messaging messages={messages} />
       <BottomBar>
         <TextInput onSendMessageClick={handleSendMessageClick} />
       </BottomBar>
-      {!user && <OverlayUserForm onSubmit={saveUser} />}
+      {showDialog && <OverlayUserForm onSubmit={saveUser} user={user} />}
     </Scaffold>
   );
 }
